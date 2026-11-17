@@ -1,0 +1,66 @@
+image: node:22.18-alpine
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+stages:
+  - verify
+  - build
+  - deploy
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+default:
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+    policy: pull-push
+  before_script:
+    - npm ci --prefer-offline
+
+quality:
+  stage: verify
+  script:
+    - npm run lint
+    - npm run type-check
+
+unit_tests:
+  stage: verify
+  script:
+    - npm run test:unit
+
+build_app:
+  stage: build
+  needs:
+    - quality
+    - unit_tests
+  script:
+    - npm run build
+    - test -f dist/index.html
+  artifacts:
+    name: "vite-dist-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - dist/
+    expire_in: 1 week
+
+deploy_pages:
+  stage: deploy
+  needs:
+    - job: build_app
+      artifacts: true
+  before_script: []
+  script:
+    - test -f dist/index.html
+  pages:
+    publish: dist
+  environment:
+    name: production
+    url: $CI_PAGES_URL
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
