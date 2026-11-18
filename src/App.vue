@@ -4,7 +4,7 @@
       <header class="hero">
         <p class="eyebrow">simple-notes-app</p>
         <h1>تطبيق ملاحظات بسيط</h1>
-        <p class="subtitle">أضف ملاحظاتك وعدلها أو احذفها من صفحة عربية واحدة.</p>
+        <!-- <p class="subtitle">أضف ملاحظاتك وعدلها أو احذفها من صفحة عربية واحدة.</p> -->
       </header>
 
       <section class="form-card">
@@ -98,7 +98,6 @@ const isSubmitting = ref(false);
 const errorMessage = ref('');
 const editingId = ref<number | null>(null);
 const hasTriedSubmit = ref(false);
-const hasTriedSubmit1 = ref(false);
 
 const form = reactive({
   title: '',
