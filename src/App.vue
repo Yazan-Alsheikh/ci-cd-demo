@@ -98,6 +98,7 @@ const isSubmitting = ref(false);
 const errorMessage = ref('');
 const editingId = ref<number | null>(null);
 const hasTriedSubmit = ref(false);
+const hasTriedSubmit1 = ref(false);
 
 const form = reactive({
   title: '',
