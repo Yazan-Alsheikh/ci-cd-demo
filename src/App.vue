@@ -4,6 +4,7 @@
       <header class="hero">
         <p class="eyebrow">simple-notes-app</p>
         <h1>تطبيق ملاحظات بسيط</h1>
+        <h1>تطبيق ملاحظات بسيط</h1>
         <!-- <p class="subtitle">أضف ملاحظاتك وعدلها أو احذفها من صفحة عربية واحدة.</p> -->
       </header>
 
